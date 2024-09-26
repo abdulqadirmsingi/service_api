@@ -7,7 +7,7 @@ UserModel = get_user_model()
 class UserRegisterSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UserModel
-		fields = '__all__'
+		fields = ['email', 'username', 'password', 'phone_number', 'first_name', 'last_name', 'department']
 	def create(self, clean_data):
 		user_obj = UserModel.objects.create_user(email=clean_data['email'], password=clean_data['password'])
 		user_obj.username = clean_data['username']

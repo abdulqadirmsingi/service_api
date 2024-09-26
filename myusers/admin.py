@@ -1,15 +1,11 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import AppUser
 
-class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
-    model = AppUser
-    list_display = ["username", "phone_number", "department"]
-    fieldsets = UserAdmin.fieldsets + ((None, {"fields": ("phone_number", "department")}),)
-    add_fieldsets = UserAdmin.add_fieldsets + ((None, {"fields": ("phone_number", "department")}),)
-
-admin.site.register(AppUser, CustomUserAdmin)
-
+# Register your models here.
+@admin.register(AppUser)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name', 'email', 'department']
+    list_per_page = 10
+    search_fields = ["email",'first_name__istartswith', 'last_name__istartswith']
+    # list_select_related = ['degree_program'] A field ambayo ni foreign key iweke kwenye select related
+    # list_editable = ['subscribed']
